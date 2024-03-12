@@ -1,3 +1,4 @@
+use core::panic;
 use std::collections::{BTreeMap, BTreeSet};
 
 use bdk_bitcoind_rpc::Emitter;

@@ -8,10 +8,11 @@ edition = "2021"
 [dependencies]
 bitcoincore-rpc = { version = "0.17" }
 bdk_chain = { path = "../chain", version = "0.11", default-features = false }
-electrsd = { version= "0.25.0", features = ["bitcoind_25_0", "esplora_a33e97e1", "legacy"] }
+electrsd = { version = "0.26.0", features = ["legacy"] }
 anyhow = { version = "1" }
 
 [features]
 default = ["std"]
 std = ["bdk_chain/std"]
 serde = ["bdk_chain/serde"]
+

@@ -26,7 +26,7 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
       - name: Pre-commit checks
-        run: nix develop -L .#msrv --command pre-commit run --all-files
+        run: nix develop -L .#stable --command pre-commit run --all-files
 
   clippy:
     name: "Clippy Checks"

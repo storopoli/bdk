@@ -136,10 +136,10 @@
                   enable = true;
                   entry = lib.mkForce "${rust}/bin/cargo-fmt fmt --all -- --config format_code_in_doc_comments=true --check --color always";
                 };
-                clippy = {
-                  enable = true;
-                  entry = lib.mkForce "${rust}/bin/cargo-clippy clippy --all-targets --all-features -- -D warnings";
-                };
+                # clippy = {
+                #   enable = true;
+                #   entry = lib.mkForce "${rust}/bin/cargo-clippy clippy --all-targets --all-features -- -D warnings";
+                # };
                 nixpkgs-fmt.enable = true;
                 typos.enable = true;
                 commitizen.enable = true; # conventional commits

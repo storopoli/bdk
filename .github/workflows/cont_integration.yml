@@ -14,7 +14,7 @@ jobs:
           fail-mode: true
 
   pre-commit-checks:
-    name: "Pre-commit checks: cargo fmt/clippy, typos, pgp-signed and conventional commits"
+    name: "Pre-commit checks: cargo fmt, typos, pgp-signed and conventional commits"
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -27,6 +27,21 @@ jobs:
         uses: Swatinem/rust-cache@v2
       - name: Pre-commit checks
         run: nix develop -L .#msrv --command pre-commit run --all-files
+
+  clippy:
+    name: "Clippy Checks"
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v5
+      - name: Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v2
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+      - name: Clippy Checks
+        run: nix develop -L .#msrv --command cargo clippy --all-targets --all-features -- -D warnings
 
   build-test:
     name: Build, test, check Rust

@@ -43,8 +43,6 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v5
       - name: Nix Cache
         uses: DeterminateSystems/magic-nix-cache-action@v2
-      - name: Rust Cache
-        uses: Swatinem/rust-cache@v2
       - name: Build
         run: nix develop -L .#msrv --command cargo build ${{ matrix.features }}
       - name: Clippy

@@ -26,25 +26,10 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
       - name: Pre-commit checks
-        run: nix develop -L .#stable --command pre-commit run --all-files
+        run: nix develop -L .#msrv --command pre-commit run --all-files
 
   clippy:
-    name: "Clippy Checks"
-    runs-on: ubuntu-latest
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v5
-      - name: Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@v2
-      - name: Rust Cache
-        uses: Swatinem/rust-cache@v2
-      - name: Clippy Checks
-        run: nix develop -L .#msrv --command cargo clippy --all-targets --all-features -- -D warnings
-
-  build-test:
-    name: Build, test, check Rust
+    name: "MSRV build, clippy and test"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -63,10 +48,34 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@v2
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
-      - name: build
-        run: nix develop -L ".#${{ matrix.rust }}" --command cargo build ${{ matrix.features }}
-      - name: test
-        run: nix develop -L ".#${{ matrix.rust }}" --command cargo test ${{ matrix.features }}
+      - name: Build
+        run: nix develop -L .#msrv --command cargo build ${{ matrix.features }}
+      - name: Clippy
+        run: nix develop -L .#msrv --command cargo clippy --all-targets --all-features -- -D warnings
+      - name: Test
+        run: nix develop -L .#msrv --command cargo test ${{ matrix.features }}
+
+  build-test:
+    name: "Stable build and test"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        features:
+          - --no-default-features
+          - --all-features
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v5
+      - name: Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@v2
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+      - name: Build
+        run: nix develop -L .#stable --command cargo build ${{ matrix.features }}
+      - name: Test
+        run: nix develop -L .#stable --command cargo test ${{ matrix.features }}
 
   check-no-std:
     name: Check no_std

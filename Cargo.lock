@@ -97,7 +97,7 @@ checksum = "9d297deb1925b89f2ccc13d7635fa0714f12c87adce1c75356b39ca9b7178567"
 
 [[package]]
 name = "bdk"
-version = "1.0.0-alpha.6"
+version = "1.0.0-alpha.7"
 dependencies = [
  "anyhow",
  "assert_matches",
@@ -117,18 +117,18 @@ dependencies = [
 
 [[package]]
 name = "bdk_bitcoind_rpc"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "anyhow",
  "bdk_chain",
+ "bdk_testenv",
  "bitcoin",
  "bitcoincore-rpc",
- "bitcoind",
 ]
 
 [[package]]
 name = "bdk_chain"
-version = "0.10.0"
+version = "0.11.0"
 dependencies = [
  "bitcoin",
  "hashbrown 0.11.2",
@@ -146,18 +146,22 @@ dependencies = [
 
 [[package]]
 name = "bdk_electrum"
-version = "0.8.0"
+version = "0.9.0"
 dependencies = [
+ "anyhow",
  "bdk_chain",
+ "bdk_testenv",
+ "electrsd",
  "electrum-client 0.18.0",
 ]
 
 [[package]]
 name = "bdk_esplora"
-version = "0.8.0"
+version = "0.9.0"
 dependencies = [
  "async-trait",
  "bdk_chain",
+ "bdk_testenv",
  "bitcoin",
  "electrsd",
  "esplora-client",
@@ -168,7 +172,7 @@ dependencies = [
 
 [[package]]
 name = "bdk_file_store"
-version = "0.6.0"
+version = "0.7.0"
 dependencies = [
  "bdk_chain",
  "bincode",
@@ -182,6 +186,16 @@ version = "0.1.0"
 dependencies = [
  "bdk",
  "hwi",
+]
+
+[[package]]
+name = "bdk_testenv"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bdk_chain",
+ "bitcoincore-rpc",
+ "electrsd",
 ]
 
 [[package]]
